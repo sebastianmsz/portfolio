@@ -11,14 +11,12 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-    },
-     tls: {
-      rejectUnauthorized: true
     }
 });
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
     }
