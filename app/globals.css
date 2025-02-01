@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 240 10% 3.9%;
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+		--primary: 221.2 83.2% 53.3%; /* Blue-600 */
+		--primary-foreground: 0 0% 98%;
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+		--ring: 240 5.9% 10%;
+		--radius: 0.75rem;
+		--gradient-angle: 45deg;
+	}
+
+	.dark {
+		--background: 240 10% 3.9%;
+		--foreground: 0 0% 98%;
+		--card: 240 10% 3.9%;
+		--card-foreground: 0 0% 98%;
+		--popover: 240 10% 3.9%;
+		--popover-foreground: 0 0% 98%;
+		--primary: 217.2 91.2% 59.8%; /* Blue-500 */
+		--primary-foreground: 240 5.9% 10%;
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+		--ring: 240 4.9% 83.9%;
+	}
+
+	@keyframes gradient-pan {
+		from {
+			background-position: 0% center;
+		}
+		to {
+			background-position: -200% center;
+		}
+	}
+
+	@keyframes float {
+		0% {
+			transform: translateY(0px);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+		100% {
+			transform: translateY(0px);
+		}
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground antialiased;
+	}
+}
+
+@layer components {
+	.input {
+		@apply flex h-10 w-full rounded-xl border border-input bg-background/50 px-4 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 backdrop-blur-lg transition-all;
+	}
+
+	.textarea {
+		@apply flex min-h-[120px] w-full rounded-xl border border-input bg-background/50 px-4 py-3 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 backdrop-blur-lg transition-all;
+	}
+
+	.gradient-text {
+		@apply bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent;
+	}
+}
+
+@layer utilities {
+	.backdrop-blur-xs {
+		backdrop-filter: blur(2px);
+	}
+	.backdrop-blur-sm {
+		backdrop-filter: blur(4px);
+	}
+	.backdrop-blur-md {
+		backdrop-filter: blur(8px);
+	}
+	.backdrop-blur-lg {
+		backdrop-filter: blur(16px);
+	}
+	.backdrop-blur-xl {
+		backdrop-filter: blur(24px);
+	}
+
+	.gradient-mask {
+		mask-image: radial-gradient(ellipse at center, white, transparent 70%);
+	}
+
+	.animate-float {
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.animate-gradient-pan {
+		animation: gradient-pan 8s linear infinite;
+		background-size: 200%;
+	}
+
+	.text-balance {
+		text-wrap: balance;
+	}
+
+	.gradient-grid {
+		background-image: linear-gradient(
+				to right,
+				hsl(var(--muted-foreground) / 0.07) 1px,
+				transparent 1px
+			),
+			linear-gradient(
+				to bottom,
+				hsl(var(--muted-foreground) / 0.07) 1px,
+				transparent 1px
+			);
+		background-size: 24px 24px;
+	}
+
+	.radial-gradient {
+		background: radial-gradient(
+			circle at center,
+			hsl(var(--primary) / 0.1) 0%,
+			transparent 70%
+		);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+@layer utilities {
+	.gradient-mask {
+		mask-image: linear-gradient(
+			to bottom,
+			transparent 0%,
+			white 10%,
+			white 90%,
+			transparent 100%
+		);
+	}
+
+	.overflow-gradient-fix {
+		padding: 1px; /* Crea un espacio para el gradiente */
+		margin: -1px; /* Compensa el padding adicional */
+	}
+}
