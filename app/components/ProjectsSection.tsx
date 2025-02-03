@@ -27,7 +27,7 @@ const projects = [
 		title: "Disney+ Clone",
 		repo: "https://github.com/sebastianmsz/disney-plus-clone",
 		liveDemo: "https://sebastianmsz.github.io/disney-plus-clone",
-		tech: ["React", "Firebase", "Styled Components", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
+		tech: ["React", "Styled Components", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
 	},
 ];
 

@@ -97,7 +97,7 @@ export default function AboutSection() {
 					/>
 					<div className="absolute bottom-0 left-0 right-0 p-6 bg-background/80 backdrop-blur-lg border-t border-muted-foreground/10">
 						<h3 className="text-xl font-semibold">Sebastian Molina</h3>
-						<p className="text-muted-foreground">Web Apps Developer</p>
+						<p className="text-muted-foreground">Web Developer</p>
 					</div>
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(125,88,251,0.1)_0%,transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity" />
 				</motion.div>

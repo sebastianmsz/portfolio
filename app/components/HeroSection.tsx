@@ -27,16 +27,17 @@ export default function HeroSection() {
             <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
               {translate("hello")}
             </span>
-            <div className="mt-4 text-4xl md:text-5xl font-medium text-foreground/80">
-              <Typewriter
-                words={[translate("role")]}
-                loop={1}
-                cursor
-                cursorStyle="|"
-                typeSpeed={70}
-                deleteSpeed={50}
-              />
-            </div>
+			<div className="mt-4 text-4xl md:text-5xl font-medium text-foreground/80">
+				<Typewriter
+					key={language} // Force re-render on language change
+					words={[translate("role")]} // Wrap translated string in array
+					loop={1} // Type only once
+					cursor
+					cursorStyle="|"
+					typeSpeed={70}
+					deleteSpeed={50}
+				/>
+			</div>
           </motion.h1>
 
 					<motion.p
@@ -80,11 +81,11 @@ export default function HeroSection() {
 						asChild
 						variant="secondary"
 						className="rounded-full gap-2 px-6 h-12 border border-muted-foreground/20 hover:border-primary/30 backdrop-blur-lg"
-					>
-						<Link href="/SebastianMolinaCV.pdf" download>
+						>
+						<a href="/SebastianMolinaCV.pdf" download>
 							<Download className="w-5 h-5" />
 							Download CV
-						</Link>
+						</a>
 					</Button>
 				</motion.div>
 			</motion.div>
