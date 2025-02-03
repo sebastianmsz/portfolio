@@ -68,7 +68,7 @@ const translations: Record<Language, TranslationType> = {
 		sections: {
 			about: "About",
 			skills: "Skills",
-			projects: "Recent Projects",
+			projects: "Projects",
 			education: "Education",
 			contact: "Contact",
 		},
@@ -80,11 +80,19 @@ const translations: Record<Language, TranslationType> = {
 			},
 			disneyPlus: {
 				title: "Disney+ Clone",
-				description: "A Disney+ clone built with React and Firebase.",
+				description: "A Disney+ clone built with React and TypeScript.",
 			},
 			portfolio: {
 				title: "Portfolio",
 				description: "My personal portfolio website.",
+			},
+			weatherApp: {
+				title: "Weather App",
+				description: "Application to consult the weather details of any place in the world, with a flat design."
+			},
+			akiraSignUpPage: {
+				title: "Akira Sign Up Page",
+				description: "A registration page built with HTML and CSS with a sharp and vibrant design.",
 			},
 		},
 		education: {
@@ -166,7 +174,7 @@ const translations: Record<Language, TranslationType> = {
 		sections: {
 			about: "Sobre mí",
 			skills: "Habilidades",
-			projects: "Proyectos Recientes",
+			projects: "Proyectos",
 			education: "Educación",
 			contact: "Contacto",
 		},
@@ -177,11 +185,19 @@ const translations: Record<Language, TranslationType> = {
 			},
 			disneyPlus: {
 				title: "Clon de Disney+",
-				description: "Un clon de Disney+ construido con React y Firebase.",
+				description: "Un clon de Disney+ construido con React y TypeScript",
 			},
 			portfolio: {
 				title: "Portafolio",
 				description: "Mi sitio web personal.",
+			},
+			weatherApp: {
+				title: "Aplicación del Clima",
+				description: "Aplicación para consultar los detalles climaticos de cualquier lugar del mundo, con un diseño plano.",
+			},
+			akiraSignUpPage: {
+				title: "Página de Registro de Akira",
+				description: "Página de registro construida con HTML y CSS con un diseño afilado y vibrante.",
 			},
 		},
 		education: {

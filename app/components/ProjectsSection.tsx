@@ -27,7 +27,21 @@ const projects = [
 		title: "Disney+ Clone",
 		repo: "https://github.com/sebastianmsz/disney-plus-clone",
 		liveDemo: "https://sebastianmsz.github.io/disney-plus-clone",
-		tech: ["React", "Styled Components", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
+		tech: ["React", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
+	},
+	{
+		id:"weatherApp",
+		title: "Weather App",
+		repo: "https://github.com/sebastianmsz/weather-app",
+		liveDemo: "https://sebastianmsz.github.io/weather-app",
+		tech: ["Webpack", "JavaScript", "HTML", "CSS"]
+	},
+	{
+		id: "akiraSignUpPage",
+		title: "Akira Sign Up Page",
+		repo: "https://github.com/sebastianmsz/akira-signup-page",
+		liveDemo: "https://sebastianmsz.github.io/akira-signup-page/",
+		tech: ["HTML", "CSS", "JavaScript"]
 	},
 ];
 
