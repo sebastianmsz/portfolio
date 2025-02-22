@@ -18,6 +18,36 @@ import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
+function JsonLd() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sebastian Molina",
+    "url": "https://sebastianmsz.vercel.app",
+    "image": "https://sebastianmsz.vercel.app/profile.webp",
+    "sameAs": [
+      "https://github.com/sebastianmsz",
+      "https://linkedin.com/in/sebastianmsz"
+    ],
+    "jobTitle": "Full Stack Developer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Freelance"
+    },
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Atonomous University of the West"
+    }
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
+
 function AnimatedBackground() {
   return (
     <div className="fixed inset-0 -z-50 pointer-events-none">
@@ -53,6 +83,7 @@ function AnimatedBackground() {
 export default function Home() {
   return (
     <>
+      <JsonLd />
       <AnimatedBackground />
       <LanguageProvider>
         <HomeContent />

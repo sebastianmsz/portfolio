@@ -14,7 +14,17 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
     unoptimized: true,
+  },
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'es',
   },
   experimental: {
     webpackBuildWorker: true,
