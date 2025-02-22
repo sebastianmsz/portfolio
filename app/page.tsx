@@ -18,7 +18,6 @@ import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
-// Animated background component for clarity and reusability
 function AnimatedBackground() {
   return (
     <div className="fixed inset-0 -z-50 pointer-events-none">
@@ -71,11 +70,9 @@ function HomeContent() {
     offset: ["start start", "end start"],
   });
 
-  // Animate background on scroll
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
-  // Avoid rendering until theme is resolved
   if (!theme && !resolvedTheme) {
     return null;
   }
@@ -109,7 +106,6 @@ function HomeContent() {
               />
             </Link>
 
-            {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-8">
               {["projects", "skills", "about", "contact"].map((item) => (
                 <motion.div key={item} whileHover={{ scale: 1.05 }}>
@@ -124,7 +120,6 @@ function HomeContent() {
               ))}
             </div>
 
-            {/* Theme and Language Toggles */}
             <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-3">
                 <ThemeToggle />
@@ -136,7 +131,6 @@ function HomeContent() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-32 py-16 md:py-0">
         <HeroSection />
         <SkillsSection />

@@ -18,8 +18,8 @@ const projects = [
 	{
 		id: "promptCentral",
 		title: "Prompt-Central",
-		repo: "https://github.com/sebastianmsz/prompt-central",
-		liveDemo: "https://prompt-central-msz.vercel.app",
+		repo: "https://github.com/sebastianmsz/promptcentral",
+		liveDemo: "https://promptcentral.vercel.app",
 		tech: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "NextAuth.js"]
 	},
 	{
@@ -30,10 +30,10 @@ const projects = [
 		tech: ["React", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
 	},
 	{
-		id:"weatherApp",
-		title: "Weather App",
-		repo: "https://github.com/sebastianmsz/weather-app",
-		liveDemo: "https://sebastianmsz.github.io/weather-app",
+		id:"solary",
+		title: "Solary",
+		repo: "https://github.com/sebastianmsz/solary",
+		liveDemo: "https://sebastianmsz.github.io/solary",
 		tech: ["Webpack", "JavaScript", "HTML", "CSS"]
 	},
 	{

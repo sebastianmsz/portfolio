@@ -81,10 +81,10 @@ export default function HeroSection() {
 						asChild
 						variant="secondary"
 						className="rounded-full gap-2 px-6 h-12 border border-muted-foreground/20 hover:border-primary/30 backdrop-blur-lg"
-						>
-						<a href="/SebastianMolinaCV.pdf" download>
+					>
+						<a href={`/CV-${language.toUpperCase()}-Sebastian-Molina.pdf`} download>
 							<Download className="w-5 h-5" />
-							Download CV
+							{translate("CV")}
 						</a>
 					</Button>
 				</motion.div>

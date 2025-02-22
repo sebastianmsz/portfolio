@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = "en" | "es";
 
-type TranslationValue = string | Record<string, TranslationValue>;
+type TranslationValue = string | { [key: string]: string | { [key: string]: string } };
 type TranslationType = Record<string, TranslationValue>;
 
 interface LanguageContextType {
@@ -41,19 +41,6 @@ const translations: Record<Language, TranslationType> = {
 			"I'm a passionate web developer and graphic designer with a keen eye for detail and a love for creating engaging user experiences. My journey in tech began with a curiosity for how things work and quickly evolved into a passion for building and designing for the web.",
 		heroDescription2:
 			"With a diverse skill set encompassing both front-end development and graphic design, I enjoy crafting visually appealing and functional applications that solve real-world problems. I'm continuously learning and exploring new technologies to expand my capabilities and deliver exceptional results.",
-		promptCentralDescription:
-			"A platform for sharing and discovering prompts for AI models. Built with Next.js, Tailwind CSS, and MongoDB.",
-		project2Description: "A second project description in English.",
-		project3Description: "A third project description in English.",
-		project4Description: "A fourth project description in English.",
-		senaDescription:
-			"Focused on hardware, networks and basic programming, provided a foundation for my tech understanding.",
-		uocInformaticDescription:
-			"My computer engineering studies allowed me to explore software development, databases and algorithms, refining my technical expertise.",
-		uocGraphicDescription:
-			"This program is enhancing my ability to bring creative visions to life with visual and digital design skills.",
-		odinDescription:
-			"This intensive course solidified my web development skills by covering HTML, CSS, JavaScript, Node.js, and React.",
 		systemsTechnician: "Systems Technician",
 		informaticsEngineering: "Informatics Engineering Undergraduate",
 		graphicDesign: "Graphic Design Undergraduate",
@@ -86,9 +73,9 @@ const translations: Record<Language, TranslationType> = {
 				title: "Portfolio",
 				description: "My personal portfolio website.",
 			},
-			weatherApp: {
-				title: "Weather App",
-				description: "Application to consult the weather details of any place in the world, with a flat design."
+			solary: {
+				title: "Solary",
+				description: "Application to consult the weather details of any place in the world."
 			},
 			akiraSignUpPage: {
 				title: "Akira Sign Up Page",
@@ -147,19 +134,6 @@ const translations: Record<Language, TranslationType> = {
 			"Soy un desarrollador web y diseñador gráfico apasionado, con un gran ojo para los detalles y un amor por crear experiencias de usuario atractivas. Mi trayectoria en la tecnología comenzó con la curiosidad de cómo funcionan las cosas y rápidamente evolucionó en una pasión por construir y diseñar para la web.",
 		heroDescription2:
 			"Con un conjunto de habilidades diverso que abarca tanto el desarrollo front-end como el diseño gráfico, disfruto creando aplicaciones funcionales y visualmente atractivas que resuelvan problemas del mundo real. Estoy continuamente aprendiendo y explorando nuevas tecnologías para expandir mis capacidades y ofrecer resultados excepcionales.",
-		promptCentralDescription:
-			"Una plataforma para compartir y descubrir prompts para modelos de IA. Construido con Next.js, Tailwind CSS y MongoDB.",
-		project2Description: "Una segunda descripción del proyecto en español.",
-		project3Description: "Una tercera descripción del proyecto en español.",
-		project4Description: "Una cuarta descripción del proyecto en español.",
-		senaDescription:
-			"Centrado en hardware, redes y programación básica, proporcionó una base para mi comprensión tecnológica.",
-		uocInformaticDescription:
-			"Mis estudios de ingeniería informática me permitieron explorar el desarrollo de software, bases de datos y algoritmos, refinando mi experiencia técnica.",
-		uocGraphicDescription:
-			"Este programa está mejorando mi capacidad para dar vida a visiones creativas con habilidades de diseño visual y digital.",
-		odinDescription:
-			"Este curso intensivo consolidó mis habilidades de desarrollo web al cubrir HTML, CSS, JavaScript, Node.js y React.",
 		systemsTechnician: "Técnico en Sistemas",
 		informaticsEngineering: "Pregrado Ingeniería Informática",
 		graphicDesign: "Pregrado Diseño Gráfico",
@@ -191,9 +165,9 @@ const translations: Record<Language, TranslationType> = {
 				title: "Portafolio",
 				description: "Mi sitio web personal.",
 			},
-			weatherApp: {
-				title: "Aplicación del Clima",
-				description: "Aplicación para consultar los detalles climaticos de cualquier lugar del mundo, con un diseño plano.",
+			solary: {
+				title: "Solary",
+				description: "Aplicación para consultar los detalles climaticos de cualquier lugar del mundo.",
 			},
 			akiraSignUpPage: {
 				title: "Página de Registro de Akira",
@@ -255,7 +229,21 @@ const getNestedValue = (obj: TranslationType, path: string[]): string => {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
 	children,
 }) => {
-	const [language, setLanguage] = useState<Language>("en");
+	const [language, setLanguage] = useState<Language>(() => {
+		// Try to get the stored language from localStorage, default to "en"
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("language") as Language;
+			return stored || "en";
+		}
+		return "en";
+	});
+
+	const handleSetLanguage = (lang: Language) => {
+		setLanguage(lang);
+		if (typeof window !== "undefined") {
+			localStorage.setItem("language", lang);
+		}
+	};
 
 	const translate = (key: string): string => {
 		const keys = key.split(".");
@@ -263,7 +251,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
 	};
 
 	return (
-		<LanguageContext.Provider value={{ language, setLanguage, translate }}>
+		<LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, translate }}>
 			{children}
 		</LanguageContext.Provider>
 	);
