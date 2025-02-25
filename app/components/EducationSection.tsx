@@ -1,35 +1,19 @@
-import {
-	GraduationCap,
-	Building,
-	Calendar,
-} from "lucide-react";
+import { GraduationCap, Building, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const education = [
 	{
 		id: "systemsTechnician",
-		title: "Técnico en Sistemas",
-		institution: "Sena: Servicio Nacional de Aprendizaje",
-		year: "2016 - 2021",
 	},
 	{
 		id: "informaticsEngineering",
-		title: "Pregrado Ingeniería Informatica",
-		institution: "Universidad Autónoma de Occidente",
-		year: "2022 - Presente",
 	},
 	{
 		id: "graphicDesign",
-		title: "Pregrado Diseño Gráfico",
-		institution: "Universidad Autónoma de Occidente",
-		year: "2023 - Presente",
 	},
 	{
 		id: "odin",
-		title: "Foundations of Web Development / Full Stack JavaScript",
-		institution: "The Odin Project",
-		year: "2024",
 	},
 ];
 
@@ -83,11 +67,11 @@ export default function EducationSection() {
 								<div className="flex items-center gap-4 text-sm text-muted-foreground">
 									<span className="flex items-center gap-2">
 										<Building className="w-4 h-4" />
-										{item.institution}
+										{translate(`education.${item.id}.institution`)}
 									</span>
 									<span className="flex items-center gap-2">
 										<Calendar className="w-4 h-4" />
-										{item.year}
+										{translate(`education.${item.id}.year`)}
 									</span>
 								</div>
 								<p className="mt-4 text-muted-foreground">
