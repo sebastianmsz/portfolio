@@ -226,10 +226,16 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
 	children,
 }) => {
 	const [language, setLanguage] = useState<Language>(() => {
-		// Try to get the stored language from localStorage, default to "en"
 		if (typeof window !== "undefined") {
+			// First try to get from localStorage
 			const stored = localStorage.getItem("language") as Language;
-			return stored || "en";
+			if (stored) return stored;
+
+			// If no stored preference, detect browser language
+			const browserLang = window.navigator.language.split('-')[0];
+			const supportedLang = browserLang === 'es' || browserLang === 'en' ? browserLang : 'en';
+			localStorage.setItem("language", supportedLang);
+			return supportedLang;
 		}
 		return "en";
 	});

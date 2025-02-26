@@ -22,10 +22,6 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  i18n: {
-    locales: ['en', 'es'],
-    defaultLocale: 'es',
-  },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
