@@ -29,7 +29,7 @@ function JsonLd() {
       "https://github.com/sebastianmsz",
       "https://linkedin.com/in/sebastianmsz"
     ],
-    "jobTitle": "Full Stack Developer",
+    "jobTitle": "Web Developer",
     "worksFor": {
       "@type": "Organization",
       "name": "Freelance"

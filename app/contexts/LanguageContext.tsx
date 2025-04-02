@@ -127,7 +127,7 @@ const translations: Record<Language, TranslationType> = {
 		email: "Correo electrónico",
 		message: "Mensaje",
 		send: "Enviar Mensaje",
-		CV: "Descargar CV",
+		CV: "Descargar HV",
 		heroDescription1:
 			"Soy un desarrollador web y diseñador gráfico apasionado, con un gran ojo para los detalles y un amor por crear experiencias de usuario atractivas. Mi trayectoria en la tecnología comenzó con la curiosidad de cómo funcionan las cosas y rápidamente evolucionó en una pasión por construir y diseñar para la web.",
 		heroDescription2:
