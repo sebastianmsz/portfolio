@@ -19,26 +19,26 @@ export default function HeroSection() {
 				transition={{ duration: 0.8 }}
 			>
 				<div className="space-y-6">
-				<motion.h1 
-            className="text-5xl md:text-7xl font-bold leading-tight"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              {translate("hello")}
-            </span>
-			<div className="mt-4 text-4xl md:text-5xl font-medium text-foreground/80">
-				<Typewriter
-					key={language} // Force re-render on language change
-					words={[translate("role")]} // Wrap translated string in array
-					loop={1} // Type only once
-					cursor
-					cursorStyle="|"
-					typeSpeed={70}
-					deleteSpeed={50}
-				/>
-			</div>
-          </motion.h1>
+					<motion.h1
+						className="text-5xl md:text-7xl font-bold leading-tight"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+					>
+						<span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+							{translate("hello")}
+						</span>
+						<div className="mt-4 text-4xl md:text-5xl font-medium text-foreground/80">
+							<Typewriter
+								key={language} // Force re-render on language change
+								words={[translate("role")]} // Wrap translated string in array
+								loop={1} // Type only once
+								cursor
+								cursorStyle="|"
+								typeSpeed={70}
+								deleteSpeed={50}
+							/>
+						</div>
+					</motion.h1>
 
 					<motion.p
 						className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
@@ -82,7 +82,10 @@ export default function HeroSection() {
 						variant="secondary"
 						className="rounded-full gap-2 px-6 h-12 border border-muted-foreground/20 hover:border-primary/30 backdrop-blur-lg"
 					>
-						<a href={`/CV-${language.toUpperCase()}-Sebastian-Molina.pdf`} download>
+						<a
+							href={`/CV-${language.toUpperCase()}-Sebastian-Molina.pdf`}
+							download
+						>
 							<Download className="w-5 h-5" />
 							{translate("CV")}
 						</a>
@@ -97,7 +100,7 @@ export default function HeroSection() {
 				transition={{ type: "spring", stiffness: 100 }}
 			>
 				<div className="absolute inset-0 bg-gradient-to-r from-primary to-blue-600 rounded-full blur-3xl opacity-20 animate-pulse" />
-				<div className="relative z-10 rounded-full border-4 border-primary/20 shadow-2xl overflow-hidden hover:shadow-primary/20 transition-shadow">
+				<div className="relative z-10 rounded-full border-4 border-[#1a1a1a] shadow-2xl overflow-hidden hover:shadow-primary/20 transition-shadow">
 					<Image
 						src="/profile.webp"
 						alt="Profile picture"

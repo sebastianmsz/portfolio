@@ -20,28 +20,35 @@ const projects = [
 		title: "Prompt-Central",
 		repo: "https://github.com/sebastianmsz/promptcentral",
 		liveDemo: "https://promptcentral.vercel.app",
-		tech: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "NextAuth.js"]
+		tech: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "NextAuth.js"],
 	},
 	{
 		id: "disneyPlus",
 		title: "Disney+ Clone",
 		repo: "https://github.com/sebastianmsz/disney-plus-clone",
 		liveDemo: "https://sebastianmsz.github.io/disney-plus-clone",
-		tech: ["React", "Tailwind CSS", "TypeScript", "Vite", "Axios"]
+		tech: ["React", "Tailwind CSS", "TypeScript", "Vite", "Axios"],
 	},
 	{
-		id:"solary",
+		id: "solary",
 		title: "Solary",
 		repo: "https://github.com/sebastianmsz/solary",
 		liveDemo: "https://sebastianmsz.github.io/solary",
-		tech: ["Webpack", "JavaScript", "HTML", "CSS"]
+		tech: ["Webpack", "JavaScript", "HTML", "CSS"],
 	},
 	{
 		id: "akiraSignUpPage",
 		title: "Akira Sign Up Page",
 		repo: "https://github.com/sebastianmsz/akira-signup-page",
 		liveDemo: "https://sebastianmsz.github.io/akira-signup-page/",
-		tech: ["HTML", "CSS", "JavaScript"]
+		tech: ["HTML", "CSS", "JavaScript"],
+	},
+	{
+		id: "comingSoonPortfolio3D",
+		title: "Portfolio 3D (Coming Soon)",
+		repo: "#", // No repo yet
+		liveDemo: "#", // No live demo yet
+		tech: ["Next.js", "TypeScript", "Tailwind CSS"],
 	},
 ];
 
@@ -151,7 +158,10 @@ export default function ProjectsSection() {
 					asChild
 					className="gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-8 py-6 text-lg transition-all"
 				>
-					<Link href="https://github.com/sebastianmsz?tab=repositories" target="_blank">
+					<Link
+						href="https://github.com/sebastianmsz?tab=repositories"
+						target="_blank"
+					>
 						<Github className="w-5 h-5" />
 						{translate("seeMoreProjects")}
 					</Link>

@@ -80,6 +80,11 @@ const translations: Record<Language, TranslationType> = {
 				description:
 					"A registration page built with HTML and CSS with a sharp and vibrant design.",
 			},
+			comingSoonPortfolio3D: {
+				title: "Portfolio 3D (Coming Soon)",
+				description:
+					"A new portfolio experience with 3D elements, interactivity, and much more personality. Stay tuned!",
+			},
 		},
 		education: {
 			systemsTechnician: {
@@ -127,7 +132,7 @@ const translations: Record<Language, TranslationType> = {
 		email: "Correo electrónico",
 		message: "Mensaje",
 		send: "Enviar Mensaje",
-		CV: "Descargar CV",
+		CV: "Descargar HV",
 		heroDescription1:
 			"Soy un desarrollador web y diseñador gráfico apasionado, con un gran ojo para los detalles y un amor por crear experiencias de usuario atractivas. Mi trayectoria en la tecnología comenzó con la curiosidad de cómo funcionan las cosas y rápidamente evolucionó en una pasión por construir y diseñar para la web.",
 		heroDescription2:
@@ -168,6 +173,11 @@ const translations: Record<Language, TranslationType> = {
 				title: "Página de Registro de Akira",
 				description:
 					"Página de registro construida con HTML y CSS con un diseño afilado y vibrante.",
+			},
+			comingSoonPortfolio3D: {
+				title: "Portafolio 3D (Próximamente)",
+				description:
+					"Una nueva experiencia de portafolio con elementos 3D, interactividad y mucha más personalidad. ¡Muy pronto!",
 			},
 		},
 		education: {
