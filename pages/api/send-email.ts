@@ -1,45 +1,125 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
+import { NextApiRequest, NextApiResponse } from "next";
+import { contactFormSchema, ContactFormData } from "../../lib/validation";
+import { sanitizeInput, validateCSRFToken } from "../../lib/security";
+import { createEmailService } from "../../lib/emailService";
+import { configManager } from "../../lib/config";
+import {
+	withMiddleware,
+	sendError,
+	sendSuccess,
+	RequestContext,
+} from "../../lib/middleware";
+import logger from "../../lib/logger";
 
-dotenv.config();
+// Initialize configuration and email service
+const config = configManager.getConfig();
+const emailService = createEmailService(config);
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    }
-});
+const sendEmailHandler = async (
+	req: NextApiRequest,
+	res: NextApiResponse,
+	context: RequestContext
+) => {
+	try {
+		// Validate CSRF token (in production)
+		if (!validateCSRFToken(req)) {
+			logger.warn("CSRF token validation failed", {
+				requestId: context.requestId,
+			});
+			sendError(res, context, 403, "Invalid CSRF token", "CSRF_TOKEN_INVALID");
+			return;
+		}
 
+		// Validate request body structure
+		if (!req.body || typeof req.body !== "object") {
+			logger.warn("Invalid request body", {
+				requestId: context.requestId,
+				body: req.body,
+			});
+			sendError(res, context, 400, "Invalid request body", "INVALID_BODY");
+			return;
+		}
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
+		// Sanitize input data
+		const sanitizedData = {
+			name: sanitizeInput(req.body.name || ""),
+			email: sanitizeInput(req.body.email || ""),
+			message: sanitizeInput(req.body.message || ""),
+		};
 
-    const { name, email, message } = req.body;
+		// Validate input data with Joi
+		const { error, value } = contactFormSchema.validate(sanitizedData);
+		if (error) {
+			logger.warn("Input validation failed", {
+				requestId: context.requestId,
+				errors: error.details.map((d) => ({
+					field: d.path,
+					message: d.message,
+				})),
+			});
 
+			sendError(res, context, 400, "Validation failed", "VALIDATION_ERROR", {
+				details: error.details.map((d) => ({
+					field: d.path.join("."),
+					message: d.message,
+				})),
+			});
+			return;
+		}
 
-    const mailOptions = {
-        from: email,
-        to: process.env.EMAIL_RECEIVER,
-        subject: `Contact form submission from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-    };
+		const validatedData: ContactFormData = value;
 
-    try {
-         const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ', info.response);
-        res.status(200).json({ message: 'Email sent', info: info.response });
-    } catch (error) {
-        console.error('Error sending email: ', error);
-        const errorMessage = error instanceof Error ? error.toString() : 'Unknown error';
-        res.status(500).json({ message: 'Error sending email', error: errorMessage });
-    }
+		// Log the email sending attempt
+		logger.info("Attempting to send email", {
+			requestId: context.requestId,
+			senderEmail: validatedData.email,
+			senderName: validatedData.name,
+		});
+
+		// Send email
+		const emailResult = await emailService.sendContactEmail(
+			validatedData,
+			config.EMAIL_RECEIVER
+		);
+
+		if (emailResult.success) {
+			logger.info("Email sent successfully", {
+				requestId: context.requestId,
+				messageId: emailResult.messageId,
+			});
+
+			sendSuccess(res, context, {
+				message: "Email sent successfully",
+				messageId: emailResult.messageId,
+			});
+		} else {
+			logger.error("Failed to send email", {
+				requestId: context.requestId,
+				error: emailResult.error,
+			});
+
+			sendError(
+				res,
+				context,
+				500,
+				"Failed to send email. Please try again later.",
+				"EMAIL_SEND_FAILED"
+			);
+		}
+	} catch (error) {
+		logger.error("Unexpected error in send-email handler", {
+			requestId: context.requestId,
+			error: error instanceof Error ? error.message : String(error),
+			stack: error instanceof Error ? error.stack : undefined,
+		});
+
+		sendError(res, context, 500, "Internal server error", "INTERNAL_ERROR");
+	}
 };
 
-export default handler;
+// Export the handler with middleware
+export default withMiddleware(sendEmailHandler, {
+	allowedMethods: ["POST"],
+	requireAuth: false,
+	skipRateLimit: false,
+});

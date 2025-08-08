@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+	createContext,
+	useContext,
+	useState,
+	ReactNode,
+	useEffect,
+} from "react";
 
 type Language = "en" | "es";
 
@@ -32,10 +38,17 @@ const translations: Record<Language, TranslationType> = {
 		viewDemo: "View Demo",
 		contactMe: "Contact Me",
 		contactText:
-			"Do you have any questions or proposals? Don't hesitate to contact me. I'll be happy to listen and respond as soon as possible.",
+			"Do you have any questions, proposals, or just want to check this nice form? Don't hesitate to say hi. I'll be happy to respond as soon as possible.",
 		name: "Name",
 		email: "Email",
 		message: "Message",
+		sending: "Sending...",
+		nameRequired: "Name is required",
+		nameMinLength: "Name must be at least 2 characters",
+		emailRequired: "Email is required",
+		emailInvalid: "Please enter a valid email address",
+		messageRequired: "Message is required",
+		messageMinLength: "Message must be at least 10 characters",
 		send: "Send Message",
 		CV: "Download CV",
 		heroDescription1:
@@ -43,8 +56,21 @@ const translations: Record<Language, TranslationType> = {
 		heroDescription2:
 			"With a diverse skill set encompassing both front-end development and graphic design, I enjoy crafting visually appealing and functional applications that solve real-world problems. I'm continuously learning and exploring new technologies to expand my capabilities and deliver exceptional results.",
 		contactSuccess: "Thank you for contacting me. I'll respond soon.",
+		contactSuccessDetails:
+			"Thank you for reaching out. I'll get back to you soon.",
 		contactError:
 			"There was an error sending your message. Please try again later.",
+		rateLimitExceeded: "Message limit exceeded",
+		rateLimitDetails: "Please wait before sending another message: ",
+		rateLimitUnits: {
+			hour: "hour",
+			hours: "hours",
+			minute: "minute",
+			minutes: "minutes",
+			second: "second",
+			seconds: "seconds",
+			per: "per",
+		},
 		contactFormTitle: "Contact Me",
 		about: "About me",
 		contact: "Contact",
@@ -127,10 +153,17 @@ const translations: Record<Language, TranslationType> = {
 		viewDemo: "Ver Demo",
 		contactMe: "Contáctame",
 		contactText:
-			"¿Tienes alguna pregunta o propuesta? No dudes en contactarme. Estaré encantado de escucharte y responder lo antes posible.",
+			"¿Tienes alguna pregunta o propuesta, o simplemente quieres probar este bonito formulario? No dudes en saludar. Estaré encantado de responder lo antes posible.",
 		name: "Nombre",
 		email: "Correo electrónico",
 		message: "Mensaje",
+		sending: "Enviando...",
+		nameRequired: "El nombre es obligatorio",
+		nameMinLength: "El nombre debe tener al menos 2 caracteres",
+		emailRequired: "El correo es obligatorio",
+		emailInvalid: "Por favor ingresa un correo válido",
+		messageRequired: "El mensaje es obligatorio",
+		messageMinLength: "El mensaje debe tener al menos 10 caracteres",
 		send: "Enviar Mensaje",
 		CV: "Descargar HV",
 		heroDescription1:
@@ -138,8 +171,21 @@ const translations: Record<Language, TranslationType> = {
 		heroDescription2:
 			"Con un conjunto de habilidades diverso que abarca tanto el desarrollo front-end como el diseño gráfico, disfruto creando aplicaciones funcionales y visualmente atractivas que resuelvan problemas del mundo real. Estoy continuamente aprendiendo y explorando nuevas tecnologías para expandir mis capacidades y ofrecer resultados excepcionales.",
 		contactSuccess: "Gracias por contactarme. Te responderé pronto.",
+		contactSuccessDetails:
+			"Tu mensaje fue enviado exitosamente. Pronto recibirás una respuesta.",
 		contactError:
 			"Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo más tarde.",
+		rateLimitExceeded: "Límite de mensajes excedido",
+		rateLimitDetails: "Por favor espera antes de enviar otro mensaje: ",
+		rateLimitUnits: {
+			hour: "hora",
+			hours: "horas",
+			minute: "minuto",
+			minutes: "minutos",
+			second: "segundo",
+			seconds: "segundos",
+			per: "por",
+		},
 		contactFormTitle: "Contáctame",
 		about: "Sobre mí",
 		contact: "Contacto",
@@ -235,25 +281,40 @@ const getNestedValue = (obj: TranslationType, path: string[]): string => {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
 	children,
 }) => {
-	const [language, setLanguage] = useState<Language>(() => {
-		if (typeof window !== "undefined") {
-			// First try to get from localStorage
-			const stored = localStorage.getItem("language") as Language;
-			if (stored) return stored;
+	// Default to a stable value on both server and first client render
+	const [language, setLanguage] = useState<Language>("en");
 
-			// If no stored preference, detect browser language
-			const browserLang = window.navigator.language.split('-')[0];
-			const supportedLang = browserLang === 'es' || browserLang === 'en' ? browserLang : 'en';
-			localStorage.setItem("language", supportedLang);
-			return supportedLang;
+	// After mount, load user's preference or browser language
+	useEffect(() => {
+		try {
+			const stored =
+				typeof window !== "undefined"
+					? (localStorage.getItem("language") as Language | null)
+					: null;
+			if (stored === "es" || stored === "en") {
+				setLanguage(stored);
+				return;
+			}
+
+			if (typeof window !== "undefined") {
+				const browserLang = window.navigator.language.split("-")[0];
+				const supportedLang: Language = browserLang === "es" ? "es" : "en";
+				localStorage.setItem("language", supportedLang);
+				setLanguage(supportedLang);
+			}
+		} catch {
+			// Ignore errors (e.g., private mode restrictions)
 		}
-		return "en";
-	});
+	}, []);
 
 	const handleSetLanguage = (lang: Language) => {
 		setLanguage(lang);
-		if (typeof window !== "undefined") {
-			localStorage.setItem("language", lang);
+		try {
+			if (typeof window !== "undefined") {
+				localStorage.setItem("language", lang);
+			}
+		} catch {
+			// ignore
 		}
 	};
 
